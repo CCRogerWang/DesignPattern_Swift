@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         oper = OperationFactory.createOperate(operate: "+")
         oper?.NumA = 1
         oper?.NumB = 2
-        print(oper?.getResult() ?? "Default")
+        print(oper?.calculate() ?? "Default")
     }
 
     override func didReceiveMemoryWarning() {

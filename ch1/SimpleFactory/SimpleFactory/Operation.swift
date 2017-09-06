@@ -7,13 +7,14 @@
 //
 
 import UIKit
-//protocol GetResult {
-//    func getResult() -> Double
-//}
+protocol GetResultDelegate {
+    func getResult() -> Double
+}
 
 class Operation: NSObject {
     private var _numA: Double = 0
     private var _numB: Double = 0
+    var delegate: GetResultDelegate!
     var NumA: Double {
         set {
             self._numA = newValue
@@ -36,25 +37,37 @@ class Operation: NSObject {
         }
     }
     
-    public func getResult() -> Double {
-        assert(false, "This method must be overriden by the subclass")
+    public func calculate() -> Double {
+        return delegate.getResult()
     }
 }
 
-class OperationAdd: Operation {
-    override func getResult() -> Double {
+class OperationAdd: Operation, GetResultDelegate {
+    override init() {
+        super.init()
+        delegate = self
+    }
+    func getResult() -> Double {
         return NumA + NumB
     }
 }
 
-class OperationSub: Operation {
-    override func getResult() -> Double {
+class OperationSub: Operation, GetResultDelegate {
+    override init() {
+        super.init()
+        delegate = self
+    }
+    func getResult() -> Double {
         return NumA - NumB
     }
 }
 
-class OperationMul: Operation {
-    override func getResult() -> Double {
+class OperationMul: Operation, GetResultDelegate {
+    override init() {
+        super.init()
+        delegate = self
+    }
+    func getResult() -> Double {
         return NumA * NumB
     }
 }
@@ -63,8 +76,12 @@ enum ErrorKind: Error {
     case divideZero
 }
 
-class OperationDiv: Operation {
-    override func getResult() -> Double {
+class OperationDiv: Operation, GetResultDelegate {
+    override init() {
+        super.init()
+        delegate = self
+    }
+    func getResult() -> Double {
         do {
             if NumB == 0 {
                 throw ErrorKind.divideZero
