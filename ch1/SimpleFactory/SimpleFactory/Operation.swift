@@ -7,14 +7,14 @@
 //
 
 import UIKit
-protocol GetResultDelegate {
+protocol GetResultDelegate: class {
     func getResult() -> Double
 }
 
 class Operation: NSObject {
     private var _numA: Double = 0
     private var _numB: Double = 0
-    var delegate: GetResultDelegate!
+    weak var delegate: GetResultDelegate!
     var NumA: Double {
         set {
             self._numA = newValue
